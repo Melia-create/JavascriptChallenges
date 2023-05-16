@@ -1,17 +1,19 @@
-const data = [
-  { key: "65", kbd: "A", type: "clap" },
-  { key: "83", kbd: "S", type: "hihat" },
-  { key: "68", kbd: "D", type: "kick" },
-  { key: "70", kbd: "F", type: "openhat" },
-  { key: "71", kbd: "G", type: "boom" },
-  { key: "72", kbd: "H", type: "ride" },
-  { key: "74", kbd: "J", type: "snare" },
-  { key: "75", kbd: "K", type: "tom" },
-  { key: "76", kbd: "L", type: "tink" },
+const keyData = [
+  { key: "a", kbd: "A", type: "clap", src: "/sounds/clap.wav" },
+  { key: "s", kbd: "S", type: "hihat", src: "sounds/hihat.wav" },
+  { key: "d", kbd: "D", type: "kick", src: "sounds/kick.wav" },
+  { key: "f", kbd: "F", type: "openhat", src: "sounds/openhat.wav" },
+  { key: "g", kbd: "G", type: "boom", src: "sounds/boom.wav" },
+  { key: "h", kbd: "H", type: "ride", src: "sounds/ride.wav" },
+  { key: "j", kbd: "J", type: "snare", src: "sounds/snare.wav" },
+  { key: "k", kbd: "K", type: "tom", src: "sounds/tom.wav" },
+  { key: "l", kbd: "L", type: "tink", src: "sounds/tink.wav" },
 ];
 
+//###KEYS###
+
 // Map the data to an array of HTML elements
-const htmlElements = data.map((item) => {
+const keyBoard = keyData.map((item) => {
   // Create a new <div> element for each item in the array
   const div = document.createElement("div");
 
@@ -30,7 +32,7 @@ const htmlElements = data.map((item) => {
   // Append the <kbd> element to the <div> element
   div.appendChild(kbd);
 
-  // Create a new <span> element for the sound type
+  // Create a new <audio> element for the sound type
   const sound = document.createElement("span");
 
   // Set the text content of the <span> element to the type property of the current item
@@ -44,6 +46,25 @@ const htmlElements = data.map((item) => {
 });
 
 // Append the HTML elements to the document body
-htmlElements.forEach((element) => {
+keyBoard.forEach((element) => {
   document.body.appendChild(element);
+});
+
+//###AUDIO###
+const audioSounds = keyData.map((noise) => {
+  const audio = document.createElement("audio");
+  audio.setAttribute("data-key", noise.key);
+  audio.setAttribute("src", noise.src);
+
+  return audio;
+});
+
+audioSounds.forEach((element) => {
+  document.body.appendChild(element);
+});
+
+window.addEventListener("keydown", function (e) {
+  const audio = document.querySelector(`audio[data-key="${e.key}"]`);
+
+  console.log(e.key);
 });
